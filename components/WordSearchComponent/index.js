@@ -5,8 +5,8 @@ import Row from "../Row";
 const WordSearchComponent = ({ wordSearch, onClick }) => {
   return (
     <div className="wordSearch" onClick={onClick}>
-      {wordSearch.map((row) => (
-        <Row row={row} />
+      {wordSearch.map((row, index) => (
+        <Row row={row} key={index} />
       ))}
     </div>
   );

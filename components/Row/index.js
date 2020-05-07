@@ -5,8 +5,8 @@ import Letter from "../Letter";
 const Row = ({ row }) => {
   return (
     <div className="row">
-      {row.map((letter) => (
-        <Letter letter={letter} />
+      {row.map((letter, index) => (
+        <Letter key={index} letter={letter} />
       ))}
     </div>
   );

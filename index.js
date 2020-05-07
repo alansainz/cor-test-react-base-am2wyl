@@ -34,6 +34,7 @@ function App() {
         {data.map((word, index) => (
           <WordSearchComponent
             wordSearch={word}
+            key={index}
             onClick={() => getOcurrences(index)}
           />
         ))}
