@@ -1,32 +1,48 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import Hello from './Hello';
-import './style.css';
+import React, { useState, useEffect } from "react";
+import ReactDOM from 'react-dom';
+import "./style.css";
+import { default as data } from "./assets/resources.json";
+import WordSearch from "./utils/WordSearch";
+import WordSearchComponent from "./components/WordSearchComponent";
+import Result from "./components/Result";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: 'COR'
-    };
-  }
+const keyword = "OIE";
 
-  render() {
-    return (
-      <div>
-        <Hello name={this.state.name} />
-        <h4>Sopa de letras - Test para entrevista FRONT-END</h4>
-        <p>
-          Se requiere hacer un <i>component</i> que segun un archivo json con unas matrices, este muestre cuantas veces aparece la palabra "OIE" dentro de ella, ya sea horizontalmente, verticalmente, o en diagonal. (En total, hay que comprobar 8 sentidos diferentes.)
-        </p>
-        <h4>Entrada:</h4>
-        <p>La entrada consiste en seleccionar una de estas 4 matrices (proveniente de un <i>service</i> que lee un json) y mandar la seleccion embedida a una clase que haga la operación.</p>
-        <p><b>NOTA:</b> Las matrices se encuentra en un archivo json localizado en: '/resources.json'. El service va a recuperar información de este archivo simulando una petición a una API.</p>
-        <h4>Salida:</h4>
-        <p>Para cada sopa de letras seleccionada, hay que escribir cuantas veces aparece "OIE" dentro de ella. Para esto es preferible obtener la respuesta en otro <i>componente</i> (se creativ@).</p>
+const getJson = () => Promise.resolve(data).then((data) => data.resources); // simulates async API call
+
+function App() {
+  const [info, setData] = useState();
+
+  const [result, setResult] = useState();
+
+  useEffect(() => {
+    getJson().then((data) => setData(data));
+  }, []);
+
+  const getOcurrences = (index) => {
+    const selectedWordSearch = info.length && info[index];
+    const selected = new WordSearch(selectedWordSearch, keyword);
+    const result = selected.countAllOcurrences();
+
+    setResult(result);
+  };
+
+  if (!info) return <div>loading</div>;
+  return (
+    <div className="App">
+      <div>Seleccionar Sopa de letras:</div>
+      <div className="container">
+        {info.map((word, index) => (
+          <WordSearchComponent
+            wordSearch={word}
+            onClick={() => getOcurrences(index)}
+          />
+        ))}
       </div>
-    );
-  }
+
+      <Result result={result} />
+    </div>
+  );
 }
 
-render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
