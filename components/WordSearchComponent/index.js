@@ -2,9 +2,9 @@ import React from "react";
 import "./style.css";
 import Row from "../Row";
 
-const WordSearchComponent = ({ wordSearch }) => {
+const WordSearchComponent = ({ wordSearch, onClick }) => {
   return (
-    <div className="wordSearch">
+    <div className="wordSearch" onClick={onClick}>
       {wordSearch.map((row) => (
         <Row row={row} />
       ))}

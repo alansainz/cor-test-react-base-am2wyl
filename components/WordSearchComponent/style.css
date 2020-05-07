@@ -3,4 +3,10 @@
 	flex-direction: column;
 	margin: 20px;
 	width: 200px;
+	cursor: pointer;
+	height: 100%;
+}
+
+.wordSearch:hover {
+	background-color: #4286f4;
 }
