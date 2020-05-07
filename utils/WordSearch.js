@@ -6,7 +6,9 @@ class WordSearch {
 
   _countHorizontally(array = this.wordsearch) {
     const joinedRows = array.map((row) => row.join(""));
-    const joinedReverseRows = array.map((row) => row.reverse().join(""));
+    const joinedReverseRows = array.map((row) =>
+      row.slice(0).reverse().join("")
+    );
     const regex = new RegExp(this.keyword, "g");
 
     let countFromLeftToRight = 0;
